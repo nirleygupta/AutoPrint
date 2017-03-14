@@ -11,14 +11,13 @@ public class CustomActionListener implements ActionListener {
 	CustomFrame frame;
 	MyWatch myWatchInst;
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getActionCommand().equals("Start"))
 		{
 			frame.panelChange(false);
 			try {
-				myWatchInst=new MyWatch(frame.getPrinterList().getSelectedItem().toString(), frame.getDir());
+				myWatchInst=new MyWatch(frame.getPrinterList().getSelectedItem().toString(), frame.getDir(),frame.getNumber());
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
