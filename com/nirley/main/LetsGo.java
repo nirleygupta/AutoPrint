@@ -22,9 +22,8 @@ public class LetsGo {
 		LetsGo go=new LetsGo();
 		HashMap<String,String> map=go.loadProp();
 		customPanel.setDir(map.get("directory"));
-		
+		customPanel.setNumber(Integer.parseInt(map.get("number")));
 		customPanel.baseSetup();	
-		
 		customPanel.setPrinterArray(map.get("printer"));
 		
 		customPanel.addWindowListener
