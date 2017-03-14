@@ -1,7 +1,6 @@
 package com.nirley.printAutomate;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardWatchEventKinds;
@@ -13,6 +12,7 @@ public class MyWatch{
 	
 	PrintPDF printpdf;
 	String directory; 
+	int number;
 	WatchService watcher;
 	
 	public void fileMonitor()
@@ -22,7 +22,7 @@ public class MyWatch{
 		
 		try {
 			watcher = dir.getFileSystem().newWatchService();
-			dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE);
+			dir.register(watcher, StandardWatchEventKinds.ENTRY_CREATE,StandardWatchEventKinds.ENTRY_MODIFY);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -60,13 +60,13 @@ public class MyWatch{
 						 
 						 try {
 							 Path child = dir.resolve(filename);
-							 if (!Files.probeContentType(child).contains("pdf") && filename.endsWith("pdf")) 
+							 if (!filename.toString().endsWith("pdf")) 
 								 {
 									 System.err.format("New file '%s'" +
 							                    " is not a pdf file.%n", filename);
 							                continue;	 
 								 }
-						 } catch (IOException e) {
+						 } catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 							continue;
@@ -75,7 +75,7 @@ public class MyWatch{
 						 System.out.format("Printing file %s%n", filename);
 						 
 						 try {
-							printpdf.printPDF(directory + "\\" + filename.toString());
+							printpdf.printPDF(directory + "\\" + filename.toString(),number);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -92,9 +92,10 @@ public class MyWatch{
 	}
 	
 	
-	public MyWatch(String printerName,String directory) throws Exception {
+	public MyWatch(String printerName,String directory,int number) throws Exception {
 		printpdf=new PrintPDF(printerName);
 		this.directory=directory;
+		this.number=number;
 	}
 	
 	
@@ -107,6 +108,7 @@ public class MyWatch{
 			e.printStackTrace();
 		}
 	}
+
 
 
 }
