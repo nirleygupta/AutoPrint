@@ -8,7 +8,8 @@ import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.printing.Scaling;
 
 public class PrintPDF {
 
@@ -43,7 +44,7 @@ public class PrintPDF {
 	
 	
 
-	public boolean printPDF(String filePath) throws Exception
+	public boolean printPDF(String filePath, int number) throws Exception
 	{
 		PDDocument doc=null;
 		boolean status = false;
@@ -53,8 +54,10 @@ public class PrintPDF {
 			
 			doc=PDDocument.load(new File(filePath));
 			PrinterJob job=PrinterJob.getPrinterJob();
-			job.setPageable(new PDFPageable(doc));
+			PDFPrintable printable=new PDFPrintable(doc, Scaling.SCALE_TO_FIT);
+			job.setPrintable(printable);
 			job.setPrintService(defaultPrintService);
+			job.setCopies(number);
 			job.print();
 			status=true;
 		}
