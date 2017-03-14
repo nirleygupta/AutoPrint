@@ -23,6 +23,16 @@ public class CustomFrame extends JFrame{
 	JButton startButton;
 	JComboBox<String> printerList;
 	String dir;
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+
+	int number=1;
 	String[] printersArray;
 	
 	public String getDir() {
@@ -77,7 +87,6 @@ public class CustomFrame extends JFrame{
 		dirButton.setVisible(true);
 		dirButton.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				fileChooser.setDialogTitle("Download Directory");
